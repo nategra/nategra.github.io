@@ -1,0 +1,754 @@
+:root {
+    /* color */
+    --bg: #f5f4f1;          /* warm off-white */
+    --text: #0a0a0a;        /* near black */
+    --accent: #5f7d6a;      /* muted green */
+    --muted: rgba(10, 10, 10, 0.55);
+
+    /* spacing */
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.5rem;
+    --space-4: 2rem;
+    --space-6: 3rem;
+    --space-8: 5rem;
+    --space-10: 8rem;
+
+    /* layout */
+    --content-max: 980px;
+    --section-pad-x: clamp(1.5rem, 6vw, 5rem);
+    --section-pad-y: clamp(4rem, 10vh, 8rem);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    display: block;
+}
+
+/* ---------- Typography ---------- */
+
+h1, h2, h3 {
+    font-weight: 500;        /* Roboto Medium */
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--text);
+}
+
+h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-4);
+}
+
+p {
+    font-weight: 300;
+    font-size: clamp(1rem, 1.25vw, 1.125rem);
+    max-width: 36em;
+}
+
+p + p {
+    margin-top: var(--space-2);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--accent);
+}
+
+/* ---------- Ornament Line — unified strata system ---------- */
+
+/* One geometric system across all sections.
+   The main line functions as a divider; two right-aligned
+   contour bands build a staggered relief toward the right. */
+
+.ornament-line {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    background: rgba(95, 125, 106, 0.55);
+    margin: var(--space-6) 0 var(--space-4);
+    overflow: visible;
+    pointer-events: none;
+}
+
+/* Stratum A — 62% from right, 9px below */
+.ornament-line::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 9px;
+    width: 45%;
+    height: 1px;
+    background: rgba(95, 125, 106, 0.20);
+}
+
+/* Stratum B — 38% from right, 18px below */
+.ornament-line::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 18px;
+    width: 25%;
+    height: 1px;
+    background: rgba(95, 125, 106, 0.12);
+}
+
+/* ---------- Language switcher ---------- */
+
+.lang-switcher {
+    position: fixed;
+    top: var(--space-3);
+    right: var(--section-pad-x);
+    display: flex;
+    gap: 0;
+    align-items: center;
+    z-index: 10;
+}
+
+.lang-switcher button {
+    background: none;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font: inherit;
+    font-size: clamp(0.75rem, 1.5vw, 1rem);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: var(--space-1) 0;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    margin-right: 0;
+    transition: max-width 0.3s ease, opacity 0.25s ease, margin-right 0.3s ease;
+}
+
+.lang-switcher button[aria-pressed="true"] {
+    max-width: 2em;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lang-switcher button:hover {
+    opacity: 0.85;
+}
+
+.lang-switcher.is-open button {
+    max-width: 2em;
+    opacity: 0.70;
+    pointer-events: auto;
+    margin-right: var(--space-2);
+}
+
+.lang-switcher.is-open button[aria-pressed="true"] {
+    opacity: 1;
+}
+
+.lang-switcher.is-open button:last-child {
+    margin-right: 0;
+}
+
+.lang-switcher.is-past-hero button {
+    color: var(--text);
+}
+
+/* ---------- Sections ---------- */
+
+section {
+    padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+section > *:not(.full-bleed) {
+    max-width: var(--content-max);
+}
+
+section > .ornament-line {
+    max-width: none;
+}
+
+section:has(> .ornament-line:last-child) {
+    padding-bottom: 0;
+}
+
+section > .ornament-line:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- Hero ---------- */
+
+#hero {
+    position: relative;
+    min-height: 80dvh;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    background-color: var(--bg);
+}
+
+#hero .hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    z-index: 0;
+}
+
+#hero .hero-image.is-loaded {
+    opacity: 1;
+}
+
+/* Overlay logo: visible only on viewports where the burnt-in corner mark of
+   the hero image gets clipped by object-fit: cover (vp aspect ≤ ~1.125).
+   Image aspect is 3:2 and the burnt logo sits at 3-11% of source width, so the
+   crop math gives a fully-visible threshold of vp aspect 9/8. */
+#hero .hero-overlay-logo {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--section-pad-x);
+    width: clamp(2.5rem, 10vw, 4rem);
+    height: auto;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+    /* Render as white silhouette to match the burnt-in mark's aesthetic over
+       the photo. The source PNG is coloured (green leaf + grey bird);
+       brightness(0) flattens to black, invert(1) lifts to white, alpha is
+       preserved so the shape stays clean. */
+    filter: brightness(0) invert(1);
+    transition: opacity 0.6s ease;
+}
+
+@media (max-aspect-ratio: 9/8) {
+    #hero .hero-image.is-loaded ~ .hero-overlay-logo {
+        opacity: 1;
+    }
+}
+
+#hero .hero-content {
+    position: relative;
+    z-index: 1;
+    padding: var(--section-pad-y) var(--section-pad-x);
+    max-width: var(--content-max);
+    color: #ffffff;
+    text-shadow: 0 1px 24px rgba(0, 0, 0, 0.35);
+}
+
+#hero h1 {
+    color: #ffffff;
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+}
+
+#hero .ornament-line {
+    background: rgba(255, 255, 255, 0.70);
+}
+
+#hero .ornament-line::before {
+    background: rgba(255, 255, 255, 0.10);
+}
+
+#hero .ornament-line::after {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+#hero p {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    opacity: 0.9;
+}
+
+/* Fallback when no image has loaded yet (Step 1/2 review) */
+#hero:not(:has(.hero-image.is-loaded)) .hero-content {
+    color: var(--text);
+    text-shadow: none;
+}
+
+#hero:not(:has(.hero-image.is-loaded)) h1,
+#hero:not(:has(.hero-image.is-loaded)) p {
+    color: var(--text);
+}
+
+#hero:not(:has(.hero-image.is-loaded)) .ornament-line {
+    background: rgba(95, 125, 106, 0.55);
+}
+
+#hero:not(:has(.hero-image.is-loaded)) .ornament-line::before,
+#hero:not(:has(.hero-image.is-loaded)) .ornament-line::after {
+    background: rgba(95, 125, 106, 0.08);
+}
+
+/* ---------- Description ---------- */
+
+#description {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: var(--space-8);
+    row-gap: var(--space-8);
+    align-items: start;
+}
+
+#description > .desc-block:nth-child(1) {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#description > .desc-block:nth-child(2) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+#description > .desc-block:nth-child(3) {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#description > .desc-block {
+    max-width: none;
+}
+
+#description > .desc-block:nth-child(odd) {
+    padding-left: 33.33%;
+}
+
+#description > .desc-block:nth-child(even) {
+    padding-right: 33.33%;
+}
+
+#description > .ornament-line {
+    grid-column: 1 / -1;
+    margin-top: calc(var(--space-8) * 2);
+}
+
+.desc-block h2 {
+    margin-bottom: var(--space-4);
+}
+
+.desc-block p {
+    line-height: 1.55;
+    max-width: none;
+}
+
+@media (max-width: 640px) {
+    #description {
+        grid-template-columns: 1fr;
+    }
+
+    /* The base rules use explicit grid-column/grid-row on nth-child(1..3) to
+       weave the desktop two-column layout. In single-column mode they have to
+       be reset with matching specificity, otherwise grid-column: 2 forces the
+       browser to auto-generate a second column. */
+    #description > .desc-block:nth-child(n) {
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    #description > .desc-block:nth-child(odd),
+    #description > .desc-block:nth-child(even) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #references > p {
+        padding-inline: var(--section-pad-x);
+    }
+}
+
+/* ---------- References ---------- */
+
+/* The carousel spans the full viewport. The heading and divider keep the
+   normal section indent via padding-left below. */
+#references {
+    padding-inline: 0;
+    /* Section spans 4/5 of the viewport: the heading above and the next
+       section below stay partly visible, signalling the page continues. */
+    min-height: 80dvh;
+}
+
+#references > h2 {
+    width: 100%;
+    max-width: none;
+    padding-inline: var(--section-pad-x);
+    text-align: center;
+}
+
+#references > p {
+    max-width: none;
+    padding-inline: 36%;
+}
+
+#references > .ornament-line {
+    margin-inline: var(--section-pad-x);
+    width: auto;
+}
+
+.references-track {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-block: var(--space-6);
+    /* Center the focused item: padding equals 50% minus half the item's width,
+       clamped so very narrow viewports don't go negative. */
+    padding-inline: max(var(--space-3), calc(50% - var(--section-pad-x) - clamp(138px, 14.375vw, 230px)));
+    margin-top: var(--space-4);
+    margin-inline: var(--section-pad-x);
+    max-width: none;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    touch-action: pan-y;
+    /* Soft fade at both ends signals the edges are intentional, not clipped. */
+    --edge-fade: clamp(2rem, 6vw, 5rem);
+    -webkit-mask-image: linear-gradient(to right,
+        transparent 0,
+        #000 var(--edge-fade),
+        #000 calc(100% - var(--edge-fade)),
+        transparent 100%);
+    mask-image: linear-gradient(to right,
+        transparent 0,
+        #000 var(--edge-fade),
+        #000 calc(100% - var(--edge-fade)),
+        transparent 100%);
+}
+
+.references-track::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* Three tiers — center, adjacent ("near"), and the rest ("far").
+   The far tier sits at the viewport edges, naturally half-cut by overflow. */
+.reference-item {
+    flex: 0 0 auto;
+    width: clamp(275px, 28.75vw, 460px);
+    /* Far items get a large negative margin to compensate for their smaller
+       scale — keeps the visual gap roughly equal across all pairs. Active and
+       near items override this below with a smaller value. */
+    margin-inline: calc(-1 * clamp(62px, 5.6vw, 90px));
+    scroll-snap-align: center;
+    transform: scale(0.72);
+    opacity: 0.5;
+    transform-origin: center center;
+    transition: transform 0.75s ease, opacity 0.75s ease;
+}
+
+.reference-item.is-near {
+    margin-inline: calc(-1 * clamp(12px, 1.2vw, 18px));
+    transform: scale(0.80);
+    opacity: 0.8;
+}
+
+.reference-item.is-active {
+    margin-inline: calc(-1 * clamp(12px, 1.2vw, 18px));
+    transform: scale(1);
+    opacity: 1;
+}
+
+.reference-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background-color: rgba(10, 10, 10, 0.06);
+    filter: sepia(0.15);
+}
+
+.reference-item figcaption {
+    margin-top: var(--space-2);
+    font-size: 1rem;
+    color: var(--text);
+    font-weight: 400;
+}
+
+.reference-item figcaption .caption-source {
+    white-space: nowrap;
+}
+
+/* Placeholder shown before manifest is fetched. */
+.references-track:empty::before {
+    content: '';
+    display: block;
+    flex: 0 0 auto;
+    width: clamp(275px, 28.75vw, 460px);
+    aspect-ratio: 4 / 3;
+    background-color: rgba(10, 10, 10, 0.06);
+    scroll-snap-align: center;
+}
+
+/* ---------- Contact ---------- */
+
+#contact .contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    font-weight: 300;
+    font-style: normal;
+    margin-top: var(--space-3);
+    width: 100%;
+    max-width: none;
+}
+
+
+#contact .contact-block a {
+    align-self: flex-start;
+    border-bottom-color: transparent;
+}
+
+/* ---------- Back to top ---------- */
+
+#back-to-top {
+    position: fixed;
+    bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-1);
+    min-width: 44px;
+    min-height: 44px;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#back-to-top img {
+    display: block;
+    width: clamp(2rem, 4vw, 3rem);
+    height: auto;
+    filter: brightness(0);
+    transition: transform 0.9s cubic-bezier(0.87, 0, 0.13, 1);
+}
+
+#back-to-top:hover img {
+    transform: rotate(-90deg);
+}
+
+.contact-email-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.footer-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    font-weight: 300;
+    color: inherit;
+    cursor: pointer;
+    transition: font-weight 0.1s ease;
+}
+
+.footer-link:hover {
+    font-weight: 700;
+}
+
+/* ---------- Privacy Modal ---------- */
+
+.privacy-modal {
+    border: none;
+    padding: 0;
+    margin: auto;
+    background: var(--bg);
+    color: var(--text);
+    max-width: min(680px, 94vw);
+    border-radius: 4px;
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+}
+
+.privacy-modal::backdrop {
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+}
+
+.privacy-modal__inner {
+    padding: var(--space-6) clamp(var(--space-4), 6vw, var(--space-6));
+    overflow-y: auto;
+    max-height: 85vh;
+    max-height: 85dvh;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.privacy-modal__inner h2 {
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    letter-spacing: 0.04em;
+    color: var(--text);
+}
+
+.privacy-modal__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.privacy-modal__body p {
+    margin: 0;
+}
+
+.privacy-modal__body ul {
+    padding-left: var(--space-3);
+}
+
+.privacy-modal__body a {
+    color: var(--accent);
+    text-underline-offset: 3px;
+}
+
+.privacy-modal__close {
+    align-self: flex-end;
+    margin-top: var(--space-2);
+    background: none;
+    border: 1px solid var(--muted);
+    border-radius: 2px;
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    padding: 0.75em 1.5em;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.privacy-modal__close:hover {
+    border-color: var(--text);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+    /* Collapse strata back to plain divider on narrow viewports */
+    .ornament-line::before,
+    .ornament-line::after {
+        display: none;
+    }
+
+    #references > p {
+        padding-inline: 18%;
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --section-pad-y: 4rem;
+    }
+
+    body {
+        font-size: 1rem;
+    }
+
+    .lang-switcher {
+        top: var(--space-2);
+    }
+
+    .lang-switcher button {
+        font-size: 1rem;
+        min-height: 44px;
+    }
+
+    .reference-item {
+        width: 72vw;
+    }
+
+    .references-track {
+        padding-inline: max(var(--space-2), calc(50% - var(--section-pad-x) - 36vw));
+    }
+
+    /* Contact block: promote .contact-email-row children to direct flex items
+       of .contact-block so the three address lines group above the divider and
+       the links/email/copyright stack below it. */
+    .contact-email-row {
+        display: contents;
+    }
+
+    #contact .contact-block > span:not(.contact-copyright),
+    #contact .contact-block .contact-email-row > span:not(.contact-copyright) {
+        order: 1;
+    }
+
+    #contact .contact-block::after {
+        content: '';
+        order: 2;
+        width: 100%;
+        height: 1px;
+        background: rgba(95, 125, 106, 0.35);
+        margin-block: var(--space-3);
+    }
+
+    #contact .contact-block .footer-link {
+        order: 3;
+        align-self: flex-start;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .privacy-modal__close {
+        min-height: 44px;
+        padding: 0.75em 1.75em;
+        font-size: 0.95rem;
+    }
+
+    #contact .contact-block a[href^="mailto"] {
+        order: 4;
+        margin-top: var(--space-2);
+    }
+
+    #contact .contact-block .contact-copyright {
+        order: 5;
+    }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nategra</title>
+    <link rel="icon" href="Nategra_Favicon.ico">
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="lang-switcher" data-i18n-aria-label="langSwitcherLabel">
+    <button type="button" data-lang="de" aria-pressed="false">DE</button>
+    <button type="button" data-lang="fr" aria-pressed="false">FR</button>
+    <button type="button" data-lang="it" aria-pressed="false">IT</button>
+    <button type="button" data-lang="en" aria-pressed="false">EN</button>
+</nav>
+
+<main>
+    <section id="hero">
+        <img class="hero-image" alt="" aria-hidden="true" loading="eager">
+        <img class="hero-overlay-logo" src="assets/logo/Nategra_Logo-Bateleur.png" alt="" aria-hidden="true">
+    </section>
+
+    <section id="description">
+        <div class="desc-block">
+            <h2 data-i18n="descriptionHeadingOne"></h2>
+            <p data-i18n="descriptionLineTwo"></p>
+        </div>
+        <div class="desc-block">
+            <h2 data-i18n="descriptionHeadingTwo"></h2>
+            <p data-i18n="descriptionLineThree"></p>
+        </div>
+        <div class="desc-block">
+            <h2 data-i18n="descriptionHeadingThree"></h2>
+            <p data-i18n="descriptionLineFour"></p>
+        </div>
+        <div class="ornament-line" aria-hidden="true"></div>
+    </section>
+
+    <section id="references">
+        <h2 data-i18n="referencesHeading"></h2>
+        <p data-i18n="referencesText"></p>
+        <div class="references-track full-bleed"></div>
+        <div class="ornament-line" aria-hidden="true"></div>
+    </section>
+
+    <section id="contact">
+        <h2 data-i18n="companyName"></h2>
+        <address class="contact-block">
+            <span data-i18n="addressStreet"></span>
+            <div class="contact-email-row">
+                <span data-i18n="addressCity"></span>
+                <button class="footer-link" data-i18n="impressumLink" data-modal-open="impressum-modal"></button>
+            </div>
+            <div class="contact-email-row">
+                <span data-i18n="addressCountry"></span>
+                <button class="footer-link" data-i18n="privacyLink" data-modal-open="privacy-modal"></button>
+            </div>
+            <div class="contact-email-row">
+                <a href="mailto:info@nategra.ch">info@nategra.ch</a>
+                <span class="contact-copyright"></span>
+            </div>
+        </address>
+    </section>
+</main>
+
+<dialog id="impressum-modal" class="privacy-modal" aria-labelledby="impressum-modal-title">
+    <div class="privacy-modal__inner">
+        <h2 id="impressum-modal-title" data-i18n="impressumHeading"></h2>
+        <div class="privacy-modal__body" data-i18n="impressumBody"></div>
+        <button class="privacy-modal__close" data-i18n="impressumClose" data-modal-close></button>
+    </div>
+</dialog>
+
+<dialog id="privacy-modal" class="privacy-modal" aria-labelledby="privacy-modal-title">
+    <div class="privacy-modal__inner">
+        <h2 id="privacy-modal-title" data-i18n="privacyHeading"></h2>
+        <div class="privacy-modal__body" data-i18n="privacyBody"></div>
+        <button class="privacy-modal__close" data-i18n="privacyClose" data-modal-close></button>
+    </div>
+</dialog>
+
+<button id="back-to-top" aria-label="Back to top">
+    <img src="assets/logo/Nategra_Logo-Bateleur.png" alt="" aria-hidden="true">
+</button>
+
+<script src="assets/hero/manifest.js"></script>
+<script src="assets/references/manifest.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
