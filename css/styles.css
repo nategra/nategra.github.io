@@ -234,31 +234,35 @@ section > .ornament-line:last-child {
     opacity: 1;
 }
 
-/* Overlay logo: visible only on viewports where the burnt-in corner mark of
-   the hero image gets clipped by object-fit: cover (vp aspect ≤ ~1.125).
-   Image aspect is 3:2 and the burnt logo sits at 3-11% of source width, so the
-   crop math gives a fully-visible threshold of vp aspect 9/8. */
+/* The hero mark. It lives in the DOM rather than being burnt into the image,
+   so object-fit: cover can never clip it — the photos are centre-optimised and
+   cannot be anchored to one edge to keep a burnt-in mark in frame. */
 #hero .hero-overlay-logo {
     position: absolute;
     top: var(--space-3);
     left: var(--section-pad-x);
-    width: clamp(2.5rem, 10vw, 4rem);
+    /* Nategra_Logo-RGB.png (1516x953) carries the bird at the exact same pixel
+       scale as Nategra_Logo-Bateleur.png (853x726) — identical 719x576 green
+       bbox at the same origin — with the canvas extended for the wordmark.
+       Scaling the bird-only width by the canvas ratio therefore leaves the bird
+       rendering at precisely its previous size. */
+    --mark-bird-width: clamp(2.5rem, 10vw, 8rem);
+    width: calc(var(--mark-bird-width) * 1516 / 853);
     height: auto;
     opacity: 0;
     z-index: 1;
     pointer-events: none;
-    /* Render as white silhouette to match the burnt-in mark's aesthetic over
-       the photo. The source PNG is coloured (green leaf + grey bird);
-       brightness(0) flattens to black, invert(1) lifts to white, alpha is
-       preserved so the shape stays clean. */
+    /* Render as white silhouette over the photo. The source PNG is coloured
+       (green leaf, grey bird and wordmark); brightness(0) flattens to black,
+       invert(1) lifts to white, alpha is preserved so the shape stays clean. */
     filter: brightness(0) invert(1);
     transition: opacity 0.6s ease;
 }
 
-@media (max-aspect-ratio: 9/8) {
-    #hero .hero-image.is-loaded ~ .hero-overlay-logo {
-        opacity: 1;
-    }
+/* Fades in with the photo; stays hidden on the off-white fallback, where a
+   white mark would be invisible anyway. */
+#hero .hero-image.is-loaded ~ .hero-overlay-logo {
+    opacity: 1;
 }
 
 #hero .hero-content {
